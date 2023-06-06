@@ -2,6 +2,8 @@ package com.rgt.vehical;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +20,7 @@ public class VehicalRent {
 					+ "4. Calculate Rental Cost \n" + "5. Return Vehicle \n" + "6. Quit \n	");
 			System.out.println("Enter your choice:");
 			int choice = scanner.nextInt();
-			scanner.nextLine(); 
+			scanner.nextLine();
 
 			switch (choice) {
 
@@ -58,48 +60,39 @@ public class VehicalRent {
 
 		System.out.print("Enter model: ");
 		String model = scanner.nextLine();
-		
+
 		System.out.print("Vehicle Available For Rent ?: ");
 		Boolean isAvailable = scanner.nextBoolean();
-			
+
 		Vehicle vehicle;
 		switch (vehicleType) {
 		case "car":
 			System.out.print("Enter no.of doors: ");
 			int door_count = scanner.nextInt();
 			System.out.print("Enter Fuel Type: ");
-			String fuelType = scanner.nextLine();
-			
-			System.out.print("Enter Car Type: ");
-			String carType = scanner.nextLine();
-			
-			System.out.print("Enter Color: ");
-			String color = scanner.nextLine();
-			System.out.print("Enter Have Truck Type: ");
-			Boolean have_truck = scanner.nextBoolean();
-			vehicle= new Car(licensePlate,  vehicleType,  make, model,  isAvailable, carType,
-					  color, fuelType, have_truck,  door_count);
+			String fuelType = scanner.next();
+			vehicle = new Car(licensePlate, vehicleType, make, model, isAvailable, fuelType, door_count);
 			break;
 		case "motorcycle":
-			System.out.print("Is it electric? (true/false): ");
+			System.out.print("Is it electric? (True/False): ");
 			boolean isElectric = scanner.nextBoolean();
-			System.out.print("Enter Have Truck Type: ");
+			System.out.print("Enter Bike  Type: ");
 			String bikeType = scanner.nextLine();
 			System.out.print("Enter No.Of Gears: ");
 			int no_Of_Gear = scanner.nextInt();
-			
-			vehicle=new Motorcycle( licensePlate, vehicleType,  make,  model,  isAvailable,
-					 bikeType, isElectric,  no_Of_Gear);
+
+			vehicle = new Motorcycle(licensePlate, vehicleType, make, model, isAvailable, bikeType, isElectric,
+					no_Of_Gear);
 			break;
 		case "bicycle":
-			System.out.print("Enter the number of gears: ");
+			System.out.print("Does it have Gears ?(True/False): ");
 			Boolean is_Gears = scanner.nextBoolean();
 			System.out.print("Enter the pedalRpm: ");
 			int pedalRpm = scanner.nextInt();
 			System.out.print("Enter the wheelDiameter: ");
 			int wheelDiameter = scanner.nextInt();
-			vehicle = new Bicycle(licensePlate, vehicleType,  make,  model,  isAvailable,
-					 is_Gears,  pedalRpm,  wheelDiameter);
+			vehicle = new Bicycle(licensePlate, vehicleType, make, model, isAvailable, is_Gears, pedalRpm,
+					wheelDiameter);
 			break;
 		default:
 			System.out.println("Invalid vehicle type. Vehicle not added.");
@@ -120,6 +113,7 @@ public class VehicalRent {
 				System.out.println("License Plate: " + vehicle.getLicensePlate());
 				System.out.println("Make: " + vehicle.getMake());
 				System.out.println("Model: " + vehicle.getModel());
+				System.out.println("Model: " + vehicle.getModel());
 			}
 		}
 	}
@@ -139,11 +133,10 @@ public class VehicalRent {
 
 		System.out.print("Enter the start date and time (yyyy-MM-dd HH:mm): ");
 		String startDateTime = scanner.nextLine();
-		LocalDateTime startTime = LocalDateTime.parse(startDateTime);
-
+		LocalDateTime startTime = LocalDateTime.parse(startDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 		System.out.print("Enter the end date and time (yyyy-MM-dd HH:mm): ");
 		String endDateTime = scanner.nextLine();
-		LocalDateTime endTime = LocalDateTime.parse(endDateTime);
+		LocalDateTime endTime = LocalDateTime.parse(endDateTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 
 		Customer customer = new Customer(firstName, lastName, id);
 		Vehicle selectedVehicle = rentalService.getVehicleByLicensePlate(licensePlate);

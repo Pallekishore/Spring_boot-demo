@@ -36,7 +36,7 @@ public class RentalService implements RentalCostCalculator {
 	public BigDecimal calculateRentalCost(Rental rental) {
 		Duration duration = Duration.between(rental.getStartTime(), rental.getEndTime());
 		long hours = duration.toHours();
-		BigDecimal hourlyRate = BigDecimal.valueOf(10); // rent per hourly rate of $10
+		BigDecimal hourlyRate = BigDecimal.valueOf(10); 
 		return hourlyRate.multiply(BigDecimal.valueOf(hours));
 	}
 

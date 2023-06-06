@@ -56,4 +56,10 @@ abstract class Vehicle implements VehicleOperations {
 		this.isAvailable = isAvailable;
 	}
 
+	@Override
+	public String toString() {
+		return "Vehicle [licensePlate=" + licensePlate + ", vehicleType=" + vehicleType + ", make=" + make + ", model="
+				+ model + ", isAvailable=" + isAvailable + "]";
+	}
+
 }
